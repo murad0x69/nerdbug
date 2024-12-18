@@ -2,13 +2,12 @@
 
 # Download and update domains
 ./chaospy.py --download-new
-./chaospy.py --download-updated
+./chaospy.py --download-rewards
 
 if ls | grep ".zip" &> /dev/null; then
 	unzip '*.zip' &> /dev/null
-	cat *.txt >> newdomains.md
+	cat *.txt | anew newdomains.md > domains.txtls
 	rm *.txt
-	awk 'NR==FNR{lines[$0];next} !($0 in lines)' alltargets.txtls newdomains.md >> domains.txtls
 	################################################################################## Send new domains result to notify
 	echo "Hourly scan result $(date +%F-%T)"  | notify -silent -provider telegram
 	echo "Total $(wc -l < domains.txtls) new domains found" | notify -silent -provider telegram
